@@ -18,23 +18,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Google Maven Aynasi Ekle
+      - name: Google Maven Aynasina Yonlendir
         run: |
-          mkdir -p ~/.gradle
-          cat << 'EOF' > ~/.gradle/init.gradle
-          allprojects {
-              buildscript {
-                  repositories {
-                      maven { url 'https://googleapis.com' }
-                      google()
-                  }
-              }
-              repositories {
-                  maven { url 'https://googleapis.com' }
-                  google()
-              }
-          }
-          EOF
+          sed -i 's|mavenCentral()|maven { url = uri("https://googleapis.com") }|g' settings.gradle.kts
 
       - name: Gradle Kurulumu
         uses: gradle/actions/setup-gradle@v4
